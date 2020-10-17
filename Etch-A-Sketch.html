@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Page Title</title>
+        <style>
+            .grid-container {
+                display: grid;
+                grid-template-columns: repeat(10, 15px);
+                grid-template-rows: repeat(10, 15px);
+                align-content: center;
+                justify-content: center;
+                
+    
+            }
+            .grid-item {
+                background-color: rgba(255, 255, 255, 0.8);
+                border: 1px solid rgba(0, 0, 0, 0.4);
+                text-align: center;
+            }
+
+            .grid-item:hover, .permanent {
+                background-color: #34343a;
+            }
+            
+        </style>
+    </head>
+    <body>
+        <button id="change">Change grid</button>
+        <button id="reset">Reset</button>
+        <div id="container" class="grid-container"></div>
+        <script>
+            
+            let container = document.getElementById('container');
+            container.classList.add('grid-container');
+
+            function create(a) {
+                for (i=0; i < a; i++) {
+                    let div = document.createElement('div'); 
+                    div.classList.add('grid-item');
+                    div.addEventListener('mouseenter', function(e) {
+                        e.target.classList.add('permanent');
+                    })
+                    container.appendChild(div);
+                }
+            }
+            create(100)
+            document.body.appendChild(container);
+
+            const button = document.getElementById('reset');
+	        button.addEventListener('click', function(e) {
+                let divs = document.querySelectorAll('.permanent');
+                divs.forEach((item) => {
+                    item.classList.remove("permanent")
+           
+                })
+            })
+
+            const change = document.getElementById('change');
+            change.addEventListener('click', function(e) {                
+                let columns = prompt("Please enter the amount of collumns (max = 80)", 16);
+                let columnstext = "repeat(" + parseInt(columns) + ", " + (800 / parseInt(columns)) + "px)"
+                document.getElementById("container").style.gridTemplateColumns = columnstext;
+
+                let rows = prompt("Please enter the amount of collumns (max = 80)", 16);
+                let rowstext = "repeat(" + parseInt(rows) + ", " + (800 / parseInt(rows)) + "px)"
+                document.getElementById("container").style.gridTemplateRows = rowstext;
+                let loops = parseInt(columns) * parseInt(rows);
+                
+                container.innerHTML = "";
+                create(loops);
+            })
+            
+            /* let divs = document.querySelectorAll('.grid-item');
+            divs.forEach((item) => {
+	            item.addEventListener('mouseenter', function(e) {
+                    e.target.classList.add('permanent');
+                })
+            })   
+ */
+        </script>
+    </body>
+</html>
